@@ -13,8 +13,9 @@ createApp({
     data(){
          return{
             activelement: 0,
-                
-                toDo: [
+            newTask: "",
+            error: false,
+            toDo: [
                     {
                         task: "comprare il latte",
                         done: true,
@@ -35,11 +36,43 @@ createApp({
                         done: false,
                     }
                 ]
-             
-
          }
 
-    }
+    },
+    methods : {
+        removeTask(index){
+          this.toDo.splice(index, 1);
+        },
+
+        AddTask(){
+            if (this.newTask !== "" && this.newTask.length >= 3) {
+                const newItem = {
+                    task : this.newTask,
+                    done : false
+                }
+
+                this.toDo.unshift(newItem);
+                this.newTask = "";
+                this.error = false;
+            }
+            else{
+                this.error = true;
+            }
+            
+
+        },
+
+         doneOrUndone(idx){
+            if (this.toDo[idx].done === false) {
+                this.toDo[idx].done = true;
+            }
+            else{
+                this.toDo[idx].done = false;
+            }
+         }
+    },
+
+    
 
 }).mount("#app")
 
